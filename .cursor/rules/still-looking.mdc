@@ -1,0 +1,18 @@
+---
+description: Still Looking project rules
+alwaysApply: true
+---
+- Mobile-first. Base styles for 360px, then min-width queries.
+- Green (#1c4a39) = love, orange (#f5a460) = friendship, slate (#3a4f5a) = team/admin.
+- Use CSS variables from tokens.css. No hard-coded colours in components.
+- NEVER expose contact details, real names, owner IDs, payer phones or M-Pesa codes to the client
+  except in admin routes and the approved-unlock contact endpoint.
+- All data goes through the Repo interface. Screens never import mockRepo or supabaseRepo directly.
+- Use INVENTED sample data only. Never real people's information.
+- Validate every input with the shared Zod schemas. The server is the source of truth.
+- No PWA, manifest or service worker.
+- Every interactive element: 44px target, visible focus ring, keyboard operable.
+- Hover styles go inside @media (hover:hover). Respect prefers-reduced-motion.
+- Keep first-load JS small. Dynamic-import the reader, flows and admin.
+- Sentence-case copy. Buttons say what they do. Label sample prices and sample till as "sample".
+- Match reference/still-looking-proposal.html for visuals and flows. Do not copy its structure.

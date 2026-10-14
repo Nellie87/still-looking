@@ -1,0 +1,51 @@
+:root {
+  --green: #1c4a39;
+  --orange: #f5a460;
+  --slate: #3a4f5a;
+  --ink-on-green: #eef7f1;
+  --ink-on-orange: #14352a;
+  --ink: #12261e;
+  --muted: #3a4f5a;
+  --glass: rgba(255, 255, 255, 0.4);
+  --glass-strong: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --shadow: 0 18px 50px rgba(18, 38, 30, 0.12);
+  --radius: 28px;
+  --radius-sm: 18px;
+  --radius-pill: 999px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nav-h: 64px;
+  --top-h: 56px;
+  --love: var(--green);
+  --friend: var(--orange);
+  --bg: #e8f0ea;
+  --fg: var(--ink);
+  --panel: var(--glass);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1a15;
+    --fg: #eef7f1;
+    --glass: rgba(30, 48, 40, 0.55);
+    --glass-strong: rgba(24, 40, 34, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    --muted: #9bb0a4;
+    --ink: #eef7f1;
+  }
+}
+
+@theme inline {
+  --color-green: var(--green);
+  --color-orange: var(--orange);
+  --color-slate: var(--slate);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-instrument);
+  --font-reading: var(--font-newsreader);
+}
