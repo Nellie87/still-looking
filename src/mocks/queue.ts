@@ -9,6 +9,7 @@ export interface MockPayment {
   payerPhone: string;
   requesterToken?: string;
   requesterHandle?: string;
+  note?: string;
   status: RequestStatus;
   rejectReason?: string;
   reviewedAt?: string;

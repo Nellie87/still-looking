@@ -16,12 +16,21 @@ export const handleSchema = z
   .trim()
   .regex(/^@?[A-Za-z0-9._]{1,30}$/, "Use a valid Instagram handle");
 
-export const kenyanPhoneSchema = z
+/**
+ * Any phone number: optional + and country code, 7 to 15 digits (the E.164 limit).
+ * Spaces, dashes, dots and brackets are allowed while typing and stripped on save.
+ */
+export const phoneSchema = z
   .string()
   .trim()
-  .regex(
-    /^(\+?254|0)[17]\d{8}$/,
-    "Use a Kenyan phone like 07XX XXX XXX or +2547XX XXX XXX",
+  .transform((s) => s.replace(/[\s\-().]/g, ""))
+  .pipe(
+    z
+      .string()
+      .regex(
+        /^\+?\d{7,15}$/,
+        "Enter a valid phone number. Add your country code if you're outside Kenya, e.g. +44 7700 900123",
+      ),
   );
 
 export const mpesaCodeSchema = z
@@ -48,8 +57,8 @@ export const listingInputSchema = z
     body: z.string().trim().min(40).max(2500),
     tags: z.array(z.string().trim().min(1).max(24)).max(6),
     instagram: handleSchema,
-    phone: kenyanPhoneSchema,
-    payerPhone: kenyanPhoneSchema,
+    phone: phoneSchema,
+    payerPhone: phoneSchema,
     mpesaCode: mpesaCodeSchema,
     realName: z.string().trim().max(80).optional(),
   })
@@ -62,8 +71,14 @@ export const listingInputSchema = z
 export const unlockInputSchema = z.object({
   code: z.string().trim().min(1),
   handle: handleSchema,
-  payerPhone: kenyanPhoneSchema,
+  payerPhone: phoneSchema,
   mpesaCode: mpesaCodeSchema,
+  note: z
+    .string()
+    .trim()
+    .max(280, "Keep your note under 280 characters")
+    .optional()
+    .transform((s) => (s ? s : undefined)),
 });
 
 export const searchQuerySchema = z.object({

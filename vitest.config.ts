@@ -1,0 +1,9 @@
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    // Playwright owns e2e/; Vitest only runs unit tests under src/.
+    include: ["src/**/*.test.{ts,tsx}"],
+    passWithNoTests: true,
+  },
+});

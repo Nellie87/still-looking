@@ -205,6 +205,10 @@ class MockRepo implements Repo {
       (p) => p.code === parsed.code && p.status === "live",
     );
     if (!profile) throw new Error("That profile is not available.");
+    if (parsed.note) {
+      const check = rejectIfContactLeak(parsed.note);
+      if (!check.ok) throw new Error(check.reason);
+    }
     const code = normalizeMpesaCode(parsed.mpesaCode);
     if (this.state.payments.some((p) => p.mpesaCode === code)) {
       throw new Error("That M-Pesa code was already used. Enter a different confirmation code.");
@@ -231,6 +235,7 @@ class MockRepo implements Repo {
       requesterHandle: parsed.handle.startsWith("@")
         ? parsed.handle
         : `@${parsed.handle}`,
+      note: parsed.note,
       status: "pending",
       createdAt: new Date().toISOString(),
     };
@@ -389,6 +394,7 @@ class MockRepo implements Repo {
           payerPhoneMasked: maskPhone(p.payerPhone),
           createdAt: p.createdAt,
           requesterHandle: p.requesterHandle,
+          note: p.note,
           profile: pub,
           privateContact: profile
             ? { ...profile.private }
@@ -442,13 +448,12 @@ class MockRepo implements Repo {
 
   async adminProfiles(): Promise<AdminProfile[]> {
     this.refresh();
-    return this.state.profiles
-      .filter((p) => !["rejected", "removed"].includes(p.status))
-      .map((p) => ({
-        ...toPublic(p),
-        status: p.status,
-        privateContact: { ...p.private },
-      }));
+    /* Every status is returned; the admin page filters, so removed ones can be restored */
+    return this.state.profiles.map((p) => ({
+      ...toPublic(p),
+      status: p.status,
+      privateContact: { ...p.private },
+    }));
   }
 
   async setProfileStatus(code: string, s: ProfileStatus) {

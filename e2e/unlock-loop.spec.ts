@@ -11,7 +11,7 @@ test("unlock request → admin approve → contact unlocked", async ({ page }) =
   await page.getByRole("button", { name: /I'm interested/i }).click();
 
   await page.getByPlaceholder("@yourhandle").fill("@demo_e2e");
-  await page.getByPlaceholder("07XX XXX XXX").first().fill("0711223344");
+  await page.getByPlaceholder("+254 712 345 678").first().fill("0711223344");
   await page.getByRole("button", { name: /Continue to pay/i }).click();
 
   const code = `E2E${Date.now().toString(36).toUpperCase()}`.slice(0, 10);

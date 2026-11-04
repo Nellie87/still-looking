@@ -70,6 +70,8 @@ export interface UnlockInput {
   handle: string;
   payerPhone: string;
   mpesaCode: string;
+  /** Optional short intro the team passes on to the listed person. */
+  note?: string;
 }
 
 export interface ActivityItem {
@@ -106,6 +108,7 @@ export interface QueueItem {
   payerPhoneMasked: string;
   createdAt: string;
   requesterHandle?: string;
+  note?: string;
   profile: PublicProfile;
   privateContact: Contact;
   rejectReason?: string;
